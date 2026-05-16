@@ -1,8 +1,8 @@
 {
+  "/[locale]/page": "app/[locale]/page.js",
+  "/[locale]/auth/login/page": "app/[locale]/auth/login/page.js",
+  "/[locale]/account/dashboard/page": "app/[locale]/account/dashboard/page.js",
+  "/[locale]/admin/page": "app/[locale]/admin/page.js",
   "/[locale]/admin/categories/page": "app/[locale]/admin/categories/page.js",
-  "/[locale]/admin/orders/page": "app/[locale]/admin/orders/page.js",
-  "/[locale]/admin/discounts/page": "app/[locale]/admin/discounts/page.js",
-  "/[locale]/admin/reviews/page": "app/[locale]/admin/reviews/page.js",
-  "/[locale]/admin/users/page": "app/[locale]/admin/users/page.js",
   "/[locale]/admin/products/page": "app/[locale]/admin/products/page.js"
 }

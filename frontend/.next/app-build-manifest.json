@@ -1,5 +1,10 @@
 {
   "pages": {
+    "/[locale]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/[locale]/page.js"
+    ],
     "/[locale]/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -11,25 +16,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/[locale]/not-found.js"
     ],
-    "/[locale]/auth/login/page": [
+    "/[locale]/admin/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/[locale]/auth/login/page.js"
-    ],
-    "/[locale]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/[locale]/page.js"
+      "static/chunks/app/[locale]/admin/layout.js"
     ],
     "/[locale]/admin/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/[locale]/admin/page.js"
-    ],
-    "/[locale]/admin/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/[locale]/admin/layout.js"
     ],
     "/[locale]/admin/products/page": [
       "static/chunks/webpack.js",
@@ -41,25 +36,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/[locale]/admin/categories/page.js"
     ],
-    "/[locale]/admin/orders/page": [
+    "/[locale]/auth/login/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/[locale]/admin/orders/page.js"
+      "static/chunks/app/[locale]/auth/login/page.js"
     ],
-    "/[locale]/admin/users/page": [
+    "/[locale]/account/dashboard/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/[locale]/admin/users/page.js"
-    ],
-    "/[locale]/admin/discounts/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/[locale]/admin/discounts/page.js"
-    ],
-    "/[locale]/admin/reviews/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/[locale]/admin/reviews/page.js"
+      "static/chunks/app/[locale]/account/dashboard/page.js"
     ]
   }
 }
