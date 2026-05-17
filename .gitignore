@@ -9,4 +9,4 @@ coverage
 .idea
 .agent
 .agentignore
-.next
+frontend/.next

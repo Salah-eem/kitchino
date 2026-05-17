@@ -13,12 +13,12 @@ export class AuthService {
   ) {}
 
   async register(registerDto: RegisterDto) {
-    const existing = await this.usersService.findByEmail(registerDto.email);
-    if (existing) throw new ConflictException('Email already registered');
-    const hashed = await bcrypt.hash(registerDto.password, 10);
+    // const existing = await this.usersService.findByEmail(registerDto.email);
+    // if (existing) throw new ConflictException('Email already registered');
+    // const hashed = await bcrypt.hash(registerDto.password, 10);
     const user = await this.usersService.create({
       ...registerDto,
-      password: hashed,
+      password: registerDto.password,
     });
     const payload = { sub: user.id, email: user.email, role: user.role };
     const accessToken = this.jwtService.sign(payload, { expiresIn: '7d' });
