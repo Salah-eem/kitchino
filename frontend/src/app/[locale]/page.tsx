@@ -105,7 +105,7 @@ export default function Home() {
             </motion.div>
 
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold mb-6 leading-[0.95] tracking-tight">
-              <span className="text-white">Elevate Your</span>
+              <span className="text-slate-900 dark:text-white">Elevate Your</span>
               <br />
               <GradientText animate={false} className="text-6xl md:text-8xl lg:text-9xl">
                 Culinary Art
@@ -113,7 +113,7 @@ export default function Home() {
             </h1>
 
             <motion.p
-              className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
+              className="text-slate-600 dark:text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
@@ -144,7 +144,7 @@ export default function Home() {
         </div>
 
         {/* Bottom gradient fade */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-dark to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-light-surface dark:from-dark to-transparent" />
       </section>
 
       {/* Featured Products */}
@@ -212,8 +212,8 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="relative py-24 border-t border-white/5">
-        <div className="absolute inset-0 bg-gradient-to-b from-dark via-dark-card/50 to-dark" />
+      <section className="relative py-24 border-t border-light-border dark:border-white/5">
+        <div className="absolute inset-0 bg-gradient-to-b from-light-card via-light-surface/80 to-light-surface dark:from-dark-card dark:via-dark-card/50 dark:to-dark" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="text-center mb-16"
@@ -222,7 +222,7 @@ export default function Home() {
             viewport={{ once: true }}
           >
             <span className="text-gold text-sm uppercase tracking-[0.2em] font-medium">Why Choose Us</span>
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mt-3">
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-slate-900 dark:text-white mt-3">
               The Kitchino Promise
             </h2>
             <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mt-6" />
@@ -240,7 +240,7 @@ export default function Home() {
                 key={idx}
                 variants={itemVariants}
                 whileHover={{ y: -5, borderColor: 'rgba(212, 175, 55, 0.2)' }}
-                className="text-center p-8 rounded-2xl border border-dark-border bg-dark-card/50 transition-all duration-500 group"
+                className="text-center p-8 rounded-2xl border border-light-border bg-light-card/90 text-slate-900 transition-all duration-500 group dark:border-dark-border dark:bg-dark-card/50 dark:text-white"
               >
                 <motion.div
                   className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gold/5 border border-gold/10 flex items-center justify-center group-hover:bg-gold/10 transition-colors duration-500"
@@ -248,10 +248,10 @@ export default function Home() {
                 >
                   <feature.icon className="w-7 h-7 text-gold" />
                 </motion.div>
-                <h3 className="text-xl font-serif font-bold text-white mb-3">
+                <h3 className="text-xl font-serif font-bold mb-3">
                   {feature.title}
                 </h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{feature.desc}</p>
+                <p className="text-slate-600 text-sm leading-relaxed dark:text-gray-400">{feature.desc}</p>
               </motion.div>
             ))}
           </motion.div>

@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
+import { LayoutContent } from "@/components/LayoutContent";
 import { NextIntlClientProvider, useMessages } from 'next-intl';
 import { Toaster } from 'sonner';
 import { ConfirmProvider } from '@/hooks/use-confirm';
+import { ThemeProvider } from '@/context/ThemeContext';
 import "@/app/globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -25,19 +25,30 @@ export default function RootLayout({
 
   return (
     <html lang={locale}>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                document.documentElement.classList.toggle('dark', theme === 'dark');
+                document.documentElement.style.colorScheme = theme;
+              })();
+            `,
+          }}
+        />
+      </head>
       <body className={inter.className}>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <ConfirmProvider>
-            <div className="flex flex-col min-h-screen">
-              <Navbar />
-              <main className="flex-1">
+        <ThemeProvider>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <ConfirmProvider>
+              <LayoutContent>
                 {children}
-              </main>
-              <Footer />
-            </div>
-            <Toaster position="top-right" expand={true} richColors />
-          </ConfirmProvider>
-        </NextIntlClientProvider>
+              </LayoutContent>
+              <Toaster position="top-right" expand={true} richColors />
+            </ConfirmProvider>
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

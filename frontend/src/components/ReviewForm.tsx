@@ -36,11 +36,11 @@ export function ReviewForm({ productId, onSubmit }: ReviewFormProps) {
     }
   };
 
-  const inputClass = "w-full px-4 py-3 bg-dark-surface border border-dark-border rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/30 transition-all";
+  const inputClass = "w-full px-4 py-3 bg-surface border border-surface rounded-xl text-body placeholder:text-muted focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/30 transition-all";
 
   return (
     <div className="glass p-6 md:p-8">
-      <h3 className="text-xl font-serif font-bold text-white mb-6">Share Your Experience</h3>
+      <h3 className="text-xl font-serif font-bold text-body mb-6">Share Your Experience</h3>
 
       <AnimatePresence>
         {submitted && (
@@ -61,7 +61,7 @@ export function ReviewForm({ productId, onSubmit }: ReviewFormProps) {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label className="block text-sm font-medium text-gray-400 mb-3">Rating</label>
+          <label className="block text-sm font-medium text-muted mb-3">Rating</label>
           <div className="flex gap-2">
             {[1, 2, 3, 4, 5].map((star) => (
               <motion.button
@@ -72,19 +72,19 @@ export function ReviewForm({ productId, onSubmit }: ReviewFormProps) {
               </motion.button>
             ))}
           </div>
-          <p className="text-xs text-gray-500 mt-2">{['', 'Poor', 'Fair', 'Good', 'Very Good', 'Excellent'][rating]}</p>
+          <p className="text-xs text-muted mt-2">{['', 'Poor', 'Fair', 'Good', 'Very Good', 'Excellent'][rating]}</p>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-400 mb-2">Title</label>
+          <label className="block text-sm font-medium text-muted mb-2">Title</label>
           <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Summarize your review" required maxLength={100} className={inputClass} />
-          <p className="text-xs text-gray-600 mt-1">{title.length}/100</p>
+          <p className="text-xs text-muted mt-1">{title.length}/100</p>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-400 mb-2">Review</label>
+          <label className="block text-sm font-medium text-muted mb-2">Review</label>
           <textarea value={comment} onChange={(e) => setComment(e.target.value)} placeholder="Share your thoughts..." required maxLength={500} rows={4} className={`${inputClass} resize-none`} />
-          <p className="text-xs text-gray-600 mt-1">{comment.length}/500</p>
+          <p className="text-xs text-muted mt-1">{comment.length}/500</p>
         </div>
 
         <Button type="submit" variant="gold" size="lg" disabled={isSubmitting || !title.trim() || !comment.trim()} className="w-full">

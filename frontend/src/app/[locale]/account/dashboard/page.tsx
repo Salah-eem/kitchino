@@ -69,9 +69,9 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <section className="relative py-16 border-b border-white/5 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-dark-card to-dark" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full bg-gold/[0.02] blur-3xl" />
+      <section className="relative py-16 border-b border-light-border dark:border-white/5 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-light-card to-light-surface dark:from-dark-card dark:to-dark" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full bg-gold/[0.08] dark:bg-gold/[0.02] blur-3xl" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="flex items-center gap-6"
@@ -83,7 +83,7 @@ export default function DashboardPage() {
             </div>
             <div>
               <p className="text-gold text-sm uppercase tracking-wider font-medium">Welcome back</p>
-              <h1 className="text-3xl md:text-4xl font-serif font-bold text-white">
+              <h1 className="text-3xl md:text-4xl font-serif font-bold text-slate-900 dark:text-white">
                 {user.firstName} {user.lastName}
               </h1>
             </div>
@@ -104,15 +104,15 @@ export default function DashboardPage() {
               key={idx}
               variants={itemVariants}
               whileHover={{ y: -4, borderColor: 'rgba(212,175,55,0.15)' }}
-              className="bg-dark-card border border-dark-border rounded-2xl p-6 transition-all duration-500"
+              className="bg-light-card border border-light-border rounded-2xl p-6 transition-all duration-500 text-slate-900 dark:bg-dark-card dark:border-dark-border dark:text-white"
             >
               <div className="flex items-center justify-between mb-4">
                 <div className={`w-12 h-12 rounded-xl ${stat.bg} border flex items-center justify-center`}>
                   <stat.icon className={`w-6 h-6 ${stat.color}`} />
                 </div>
               </div>
-              <p className="text-3xl font-bold text-white">{stat.value}</p>
-              <p className="text-gray-500 text-sm mt-1">{stat.label}</p>
+              <p className="text-3xl font-bold">{stat.value}</p>
+              <p className="text-slate-500 text-sm mt-1 dark:text-gray-400">{stat.label}</p>
             </motion.div>
           ))}
         </motion.div>
@@ -124,19 +124,19 @@ export default function DashboardPage() {
           transition={{ delay: 0.4 }}
           className="glass p-6"
         >
-          <h2 className="text-lg font-serif font-bold text-white mb-6">Quick Actions</h2>
+          <h2 className="text-lg font-serif font-bold text-slate-900 dark:text-white mb-6">Quick Actions</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             {quickLinks.map((link, idx) => (
               <motion.div key={idx} whileHover={{ x: 4 }} whileTap={{ scale: 0.98 }}>
                 <Link
                   href={link.href}
-                  className="flex items-center gap-4 p-4 rounded-xl bg-dark-surface border border-dark-border hover:border-gold/10 transition-all group"
+                  className="flex items-center gap-4 p-4 rounded-xl bg-white border border-light-border hover:border-gold/10 transition-all group dark:bg-dark-surface dark:border-dark-border"
                 >
-                  <link.icon className="w-5 h-5 text-gray-500 group-hover:text-gold transition-colors" />
-                  <span className="text-gray-300 font-medium text-sm group-hover:text-white transition-colors flex-1">
+                  <link.icon className="w-5 h-5 text-gray-500 group-hover:text-gold transition-colors dark:text-gray-400" />
+                  <span className="text-slate-900 font-medium text-sm group-hover:text-gold transition-colors flex-1 dark:text-white">
                     {link.label}
                   </span>
-                  <ArrowRight className="w-4 h-4 text-gray-700 group-hover:text-gold transition-colors" />
+                  <ArrowRight className="w-4 h-4 text-gray-700 group-hover:text-gold transition-colors dark:text-gray-300" />
                 </Link>
               </motion.div>
             ))}

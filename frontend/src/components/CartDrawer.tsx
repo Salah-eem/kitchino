@@ -31,7 +31,7 @@ export function CartDrawer() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="fixed right-0 top-0 h-full w-96 bg-dark-card border-l border-dark-border z-50 flex flex-col"
+            className="fixed right-0 top-0 h-full w-96 bg-card border-l border-surface z-50 flex flex-col"
             initial={{ x: 400 }}
             animate={{ x: 0 }}
             exit={{ x: 400 }}
@@ -41,7 +41,7 @@ export function CartDrawer() {
             <div className="flex justify-between items-center p-6 border-b border-dark-border">
               <div className="flex items-center gap-3">
                 <ShoppingCart className="w-5 h-5 text-gold" />
-                <h2 className="text-lg font-serif font-bold text-white">Cart</h2>
+                <h2 className="text-lg font-serif font-bold text-body">Cart</h2>
               </div>
               <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} onClick={() => setIsOpen(false)} className="text-gray-500 hover:text-white p-1 transition-colors">
                 <X className="w-5 h-5" />
@@ -64,7 +64,7 @@ export function CartDrawer() {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: 20 }}
-                      className="flex gap-3 p-3 mb-3 rounded-xl bg-dark-surface border border-dark-border hover:border-gold/10 transition-all"
+                      className="flex gap-3 p-3 mb-3 rounded-xl bg-surface border border-surface hover:border-gold/10 transition-all"
                     >
                       <Link href={`/${locale}/products/${item.product.slug}`}>
                         <div className="relative w-14 h-14 rounded-lg overflow-hidden bg-dark-card flex-shrink-0">
@@ -75,16 +75,16 @@ export function CartDrawer() {
                         <h3 className="font-medium text-sm text-gray-200 truncate">{item.product.name}</h3>
                         <p className="text-gold font-bold text-sm mt-0.5">${item.subtotal.toFixed(2)}</p>
                         <div className="flex items-center gap-1.5 mt-2">
-                          <button onClick={() => updateItem(item.id, Math.max(1, item.quantity - 1))} className="p-1 hover:bg-dark-border rounded transition-colors">
-                            <Minus className="w-3 h-3 text-gray-500" />
+                          <button onClick={() => updateItem(item.id, Math.max(1, item.quantity - 1))} className="p-1 hover:bg-card rounded transition-colors">
+                            <Minus className="w-3 h-3 text-muted" />
                           </button>
                           <span className="text-xs text-gray-300 min-w-[20px] text-center">{item.quantity}</span>
-                          <button onClick={() => updateItem(item.id, item.quantity + 1)} className="p-1 hover:bg-dark-border rounded transition-colors">
-                            <Plus className="w-3 h-3 text-gray-500" />
+                          <button onClick={() => updateItem(item.id, item.quantity + 1)} className="p-1 hover:bg-card rounded transition-colors">
+                            <Plus className="w-3 h-3 text-muted" />
                           </button>
                         </div>
                       </div>
-                      <button onClick={() => removeItem(item.id)} className="text-gray-600 hover:text-red-400 p-1 transition-colors self-start">
+                      <button onClick={() => removeItem(item.id)} className="text-muted hover:text-red-400 p-1 transition-colors self-start">
                         <Trash2 className="w-4 h-4" />
                       </button>
                     </motion.div>
@@ -95,9 +95,9 @@ export function CartDrawer() {
 
             {/* Footer */}
             {items.length > 0 && (
-              <div className="border-t border-dark-border p-6 space-y-4">
+              <div className="border-t border-surface p-6 space-y-4">
                 <div className="flex justify-between items-baseline">
-                  <span className="text-gray-400 font-medium">Total</span>
+                  <span className="text-muted font-medium">Total</span>
                   <span className="text-gold text-2xl font-bold">${total.toFixed(2)}</span>
                 </div>
                 <Button variant="gold" size="lg" className="w-full" onClick={() => setIsOpen(false)}>

@@ -49,7 +49,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="relative border-t border-white/5 mt-20" style={{ background: '#060606' }}>
+    <footer className="relative border-t border-surface mt-20 bg-card">
       {/* Gold line top */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-[1px] bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
 
@@ -70,10 +70,10 @@ export function Footer() {
                 <GradientText animate={false}>Kitchino</GradientText>
               </span>
             </div>
-            <p className="text-gray-500 text-sm leading-relaxed mb-6">
+            <p className="text-muted text-sm leading-relaxed mb-6">
               Your destination for premium kitchen equipment and culinary tools crafted for excellence.
             </p>
-            <div className="space-y-2 text-sm text-gray-500">
+            <div className="space-y-2 text-sm text-muted">
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-gold/50" />
                 <span>hello@kitchino.com</span>
@@ -128,10 +128,10 @@ export function Footer() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         >
-          <p className="text-gray-600 text-xs mb-4 md:mb-0">
+          <p className="text-muted text-xs mb-4 md:mb-0">
             &copy; 2026 Kitchino. All rights reserved. Crafted with passion.
           </p>
-          <div className="flex items-center gap-6 text-xs text-gray-600">
+          <div className="flex items-center gap-6 text-xs text-muted">
             <Link href="#" className="hover:text-gold transition-colors">Privacy</Link>
             <Link href="#" className="hover:text-gold transition-colors">Terms</Link>
             <Link href="#" className="hover:text-gold transition-colors">Cookies</Link>

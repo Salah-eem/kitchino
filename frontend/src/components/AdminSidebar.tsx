@@ -5,19 +5,18 @@ import Link from 'next/link';
 import { useLocale } from 'next-intl';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  LayoutDashboard, 
-  Package, 
-  ShoppingCart, 
-  Users, 
-  Percent, 
-  ChevronRight, 
-  ChefHat, 
+import {
+  LayoutDashboard,
+  Package,
+  ShoppingCart,
+  Users,
+  Percent,
+  ChevronRight,
+  ChefHat,
   LogOut,
   Menu,
-  X
+  X,
 } from 'lucide-react';
-import { GradientText } from './ui/gradient-text';
 import { useAuthStore } from '@/store/authStore';
 
 interface MenuItem {
@@ -45,7 +44,7 @@ export function AdminSidebar() {
   };
 
   const SidebarContent = () => (
-    <div className="flex flex-col h-full bg-dark-bg p-6">
+    <div className="flex flex-col h-full bg-page p-6">
       {/* Header */}
       <div className="mb-12 flex items-center justify-between">
         <Link href={`/${locale}`} className="flex items-center gap-3 group" onClick={() => setIsOpen(false)}>
@@ -53,15 +52,15 @@ export function AdminSidebar() {
             <ChefHat className="w-5 h-5 text-gold" />
           </div>
           <div>
-            <h2 className="text-xl font-serif font-bold leading-tight text-white">Kitchino</h2>
-            <p className="text-[10px] text-gray-500 uppercase tracking-widest font-semibold mt-0.5">Admin Panel</p>
+            <h2 className="text-xl font-serif font-bold leading-tight text-body">Kitchino</h2>
+            <p className="text-[10px] text-muted uppercase tracking-widest font-semibold mt-0.5">Admin Panel</p>
           </div>
         </Link>
-        
+
         {/* Mobile Close Button */}
-        <button 
+        <button
           onClick={() => setIsOpen(false)}
-          className="lg:hidden p-2 text-gray-500 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+          className="lg:hidden p-2 text-muted hover:text-body hover:bg-black/5 rounded-lg transition-colors"
         >
           <X className="w-6 h-6" />
         </button>
@@ -78,7 +77,7 @@ export function AdminSidebar() {
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 group ${
                   active
                     ? 'bg-gold/10 text-gold border border-gold/20 shadow-glow'
-                    : 'text-gray-400 border border-transparent hover:bg-dark-surface hover:text-white'
+                    : 'text-muted border border-transparent hover:bg-surface hover:text-body'
                 }`}
               >
                 <Icon className="w-5 h-5 flex-shrink-0" />
@@ -91,13 +90,13 @@ export function AdminSidebar() {
       </nav>
 
       {/* Footer */}
-      <div className="mt-8 border-t border-dark-border pt-6">
+      <div className="mt-8 border-t border-surface pt-6">
         <button
           onClick={() => {
             logout();
             setIsOpen(false);
           }}
-          className="flex items-center gap-3 px-4 py-3 w-full rounded-xl text-gray-500 hover:text-red-400 hover:bg-red-500/10 transition-colors duration-300 text-sm font-medium"
+          className="flex items-center gap-3 px-4 py-3 w-full rounded-xl text-muted hover:text-red-400 hover:bg-red-500/10 transition-colors duration-300 text-sm font-medium"
         >
           <LogOut className="w-5 h-5" />
           Sign Out
@@ -112,7 +111,7 @@ export function AdminSidebar() {
       <div className="lg:hidden fixed top-4 left-4 z-[60]">
         <button 
           onClick={() => setIsOpen(!isOpen)}
-          className="p-3 rounded-xl bg-dark-surface border border-gold/20 text-gold shadow-lg"
+          className="p-3 rounded-xl bg-surface border border-gold/20 text-gold shadow-lg"
         >
           {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
@@ -144,7 +143,7 @@ export function AdminSidebar() {
 
       {/* Desktop Sidebar (Floating) */}
       <aside className="hidden lg:block w-72 fixed top-0 left-0 bottom-0 z-40 p-4">
-        <div className="h-full bg-dark-bg border border-white/5 rounded-[2rem] overflow-hidden shadow-2xl">
+        <div className="h-full bg-page border border-surface rounded-[2rem] overflow-hidden shadow-2xl">
           <SidebarContent />
         </div>
       </aside>

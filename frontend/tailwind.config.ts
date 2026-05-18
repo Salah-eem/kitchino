@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss'
 
 export default {
+  darkMode: 'class',
   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     extend: {
@@ -22,6 +23,10 @@ export default {
         'dark-card': '#111111',
         'dark-surface': '#1a1a1a',
         'dark-border': '#2a2a2a',
+        'light-bg': '#ffffff',
+        'light-card': '#f8f8f8',
+        'light-surface': '#f0f0f0',
+        'light-border': '#e0e0e0',
       },
       keyframes: {
         'fade-in': {

@@ -22,15 +22,19 @@ import {
   ChevronRight,
   ArrowLeft,
   ListPlus,
-  MessageSquare
+  MessageSquare,
+  Moon,
+  Sun
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Button } from './ui/button';
+import { useTheme } from '@/context/ThemeContext';
 
-export function Navbar() {
+function NavbarContent() {
   const { user, logout } = useAuthStore();
   const { items = [], clear: clearCart } = useCartStore();
   const { clear: clearWishlist } = useWishlistStore();
+  const { theme, toggleTheme } = useTheme();
   const locale = useLocale();
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
@@ -134,6 +138,21 @@ export function Navbar() {
 
           {/* Actions */}
           <div className="flex items-center gap-4 z-[110]">
+            {/* Theme Toggle */}
+            <button 
+              onClick={toggleTheme}
+              className="hidden sm:inline-flex p-2 text-gray-400 hover:text-gold bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 hover:border-gold/30 transition-all duration-200"
+              aria-pressed={theme === 'dark'}
+              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              {theme === 'dark' ? (
+                <Sun className="w-5 h-5" />
+              ) : (
+                <Moon className="w-5 h-5" />
+              )}
+            </button>
+
             {!isAdminRoute && (
               <div className="hidden sm:flex items-center gap-4 mr-2 border-r border-white/10 pr-6">
                 <Link href={`/${locale}/wishlist`} className="relative group p-2">
@@ -153,8 +172,8 @@ export function Navbar() {
             {user ? (
               <div className="flex items-center gap-3">
                 <Link href={`/${locale}/account/dashboard`}>
-                  <div className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-full pl-4 pr-1.5 py-1.5 hover:border-gold/50 transition-all group">
-                    <span className="text-[10px] font-bold text-gray-400 group-hover:text-white hidden sm:block uppercase tracking-wider">
+                  <div className="flex items-center gap-3 bg-surface border border-surface rounded-full pl-4 pr-1.5 py-1.5 hover:border-gold/50 transition-all group">
+                    <span className="text-[10px] font-bold text-muted group-hover:text-body hidden sm:block uppercase tracking-wider">
                       {user.firstName}
                     </span>
                     <div className="w-8 h-8 rounded-full bg-gold/10 flex items-center justify-center text-gold text-xs font-bold border border-gold/20">
@@ -162,7 +181,7 @@ export function Navbar() {
                     </div>
                   </div>
                 </Link>
-                <button onClick={handleLogout} className="p-2 text-gray-500 hover:text-red-400 transition-colors">
+                <button onClick={handleLogout} className="p-2 text-muted hover:text-red-400 transition-colors">
                   <LogOut className="w-4 h-4" />
                 </button>
               </div>
@@ -172,7 +191,10 @@ export function Navbar() {
               </Link>
             )}
 
-            <button onClick={() => setIsOpen(!isOpen)} className="lg:hidden p-2 text-white bg-white/5 rounded-xl border border-white/10">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="lg:hidden p-2 text-body bg-surface border border-surface rounded-xl shadow-sm hover:bg-surface/90 transition-all"
+            >
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
@@ -212,6 +234,15 @@ export function Navbar() {
                     </Link>
                   );
                 })}
+                <button
+                  onClick={toggleTheme}
+                  className="w-full flex items-center justify-center gap-3 py-3 rounded-3xl border border-white/10 bg-white/5 text-white hover:bg-white/10 transition-all"
+                  aria-pressed={theme === 'dark'}
+                  aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+                >
+                  {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                  {theme === 'dark' ? 'Light mode' : 'Dark mode'}
+                </button>
               </div>
             </motion.div>
           )}
@@ -221,4 +252,8 @@ export function Navbar() {
       <div className={`h-24 ${isAdmin ? 'mt-6' : ''}`} />
     </>
   );
+}
+
+export function Navbar() {
+  return <NavbarContent />;
 }
