@@ -1,11 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { useAuthStore } from '@/store/authStore';
 import { useCartStore } from '@/store/cartStore';
 import { useWishlistStore } from '@/store/wishlistStore';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ShoppingCart, 
@@ -36,9 +36,23 @@ function NavbarContent() {
   const { clear: clearWishlist } = useWishlistStore();
   const { theme, toggleTheme } = useTheme();
   const locale = useLocale();
-  const pathname = usePathname();
+  const pathname = usePathname() || '';
+  const searchParams = useSearchParams();
+  const t = useTranslations('common');
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  const supportedLocales = [
+    { code: 'en', label: 'EN' },
+    { code: 'fr', label: 'FR' },
+  ];
+
+  const localePath = (targetLocale: string) => {
+    const rest = pathname.replace(new RegExp(`^/${locale}`), '') || '';
+    const href = `/${targetLocale}${rest}`;
+    const query = searchParams.toString();
+    return query ? `${href}?${query}` : href;
+  };
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -58,25 +72,25 @@ function NavbarContent() {
   const isAdminRoute = pathname.includes(`/${locale}/admin`);
 
   const mainLinks = [
-    { label: 'Products', href: `/${locale}/products` },
-    { label: 'About', href: `/${locale}/about` },
+    { label: t('products'), href: `/${locale}/products` },
+    { label: t('about'), href: `/${locale}/about` },
   ];
 
   const loggedInLinks = [
-    { label: 'Products', href: `/${locale}/products` },
-    { label: 'Orders', href: `/${locale}/orders` },
-    { label: 'Account', href: `/${locale}/account` },
-    { label: 'Profile', href: `/${locale}/profile` },
+    { label: t('products'), href: `/${locale}/products` },
+    { label: t('orderHistory'), href: `/${locale}/account/orders` },
+    { label: t('dashboard'), href: `/${locale}/account/dashboard` },
+    { label: t('profile'), href: `/${locale}/account/profile` },
   ];
 
   const adminLinks = [
-    { label: 'Dashboard', href: `/${locale}/admin`, icon: LayoutDashboard },
-    { label: 'Products', href: `/${locale}/admin/products`, icon: Package },
-    { label: 'Categories', href: `/${locale}/admin/categories`, icon: ListPlus },
-    { label: 'Orders', href: `/${locale}/admin/orders`, icon: ShoppingCart },
-    { label: 'Users', href: `/${locale}/admin/users`, icon: Users },
-    { label: 'Discounts', href: `/${locale}/admin/discounts`, icon: Percent },
-    { label: 'Reviews', href: `/${locale}/admin/reviews`, icon: MessageSquare },
+    { label: t('dashboard'), href: `/${locale}/admin`, icon: LayoutDashboard },
+    { label: t('products'), href: `/${locale}/admin/products`, icon: Package },
+    { label: t('categories'), href: `/${locale}/admin/categories`, icon: ListPlus },
+    { label: t('orderHistory'), href: `/${locale}/admin/orders`, icon: ShoppingCart },
+    { label: t('users') ?? 'Users', href: `/${locale}/admin/users`, icon: Users },
+    { label: t('discounts') ?? 'Discounts', href: `/${locale}/admin/discounts`, icon: Percent },
+    { label: t('reviews') ?? 'Reviews', href: `/${locale}/admin/reviews`, icon: MessageSquare },
   ];
 
   const activeLinks = isAdminRoute ? adminLinks : user ? loggedInLinks : mainLinks;
@@ -138,6 +152,20 @@ function NavbarContent() {
 
           {/* Actions */}
           <div className="flex items-center gap-4 z-[110]">
+            <div className="hidden sm:inline-flex items-center gap-2 rounded-full border border-white/10 bg-surface p-1">
+              {supportedLocales.map((item) => (
+                <Link
+                  key={item.code}
+                  href={localePath(item.code)}
+                  className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase transition-all ${
+                    locale === item.code ? 'bg-gold text-dark-bg' : 'text-gray-400 hover:text-white'
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+
             {/* Theme Toggle */}
             <button 
               onClick={toggleTheme}
@@ -187,7 +215,7 @@ function NavbarContent() {
               </div>
             ) : (
               <Link href={`/${locale}/auth/login`}>
-                <Button variant="gold" size="sm" className="px-6 rounded-full font-bold h-9">Login</Button>
+                <Button variant="gold" size="sm" className="px-6 rounded-full font-bold h-9">{t('login')}</Button>
               </Link>
             )}
 
@@ -234,6 +262,20 @@ function NavbarContent() {
                     </Link>
                   );
                 })}
+                <div className="flex items-center justify-center gap-2 rounded-full border border-white/10 bg-surface p-2">
+                  {supportedLocales.map((item) => (
+                    <Link
+                      key={item.code}
+                      href={localePath(item.code)}
+                      onClick={() => setIsOpen(false)}
+                      className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase transition-all ${
+                        locale === item.code ? 'bg-gold text-dark-bg' : 'text-gray-400 hover:text-white'
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
                 <button
                   onClick={toggleTheme}
                   className="w-full flex items-center justify-center gap-3 py-3 rounded-3xl border border-white/10 bg-white/5 text-white hover:bg-white/10 transition-all"
