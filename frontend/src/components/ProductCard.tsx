@@ -83,7 +83,7 @@ export function ProductCard({ product }: ProductCardProps) {
     >
       {/* Image Container */}
       <div className="relative w-full h-56 bg-gradient-to-br from-dark-surface to-dark-card overflow-hidden">
-        <Link href={`/${locale}/products/${product.id}`} className="block w-full h-full">
+        <Link href={`/${locale}/products/${product.slug}`} className="block w-full h-full">
           <Image
             src={product.images?.[0] || product.image || '/images/placeholder.png'}
             alt={product.name}

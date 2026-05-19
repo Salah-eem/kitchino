@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useAuthStore } from '@/store/authStore';
 import { useCartStore } from '@/store/cartStore';
 import { useWishlistStore } from '@/store/wishlistStore';
@@ -29,6 +29,7 @@ import {
 import { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 import { useTheme } from '@/context/ThemeContext';
+import { LanguageSwitcher } from './LanguageSwitcher';
 
 function NavbarContent() {
   const { user, logout } = useAuthStore();
@@ -37,22 +38,9 @@ function NavbarContent() {
   const { theme, toggleTheme } = useTheme();
   const locale = useLocale();
   const pathname = usePathname() || '';
-  const searchParams = useSearchParams();
   const t = useTranslations('common');
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-
-  const supportedLocales = [
-    { code: 'en', label: 'EN' },
-    { code: 'fr', label: 'FR' },
-  ];
-
-  const localePath = (targetLocale: string) => {
-    const rest = pathname.replace(new RegExp(`^/${locale}`), '') || '';
-    const href = `/${targetLocale}${rest}`;
-    const query = searchParams.toString();
-    return query ? `${href}?${query}` : href;
-  };
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -152,19 +140,7 @@ function NavbarContent() {
 
           {/* Actions */}
           <div className="flex items-center gap-4 z-[110]">
-            <div className="hidden sm:inline-flex items-center gap-2 rounded-full border border-white/10 bg-surface p-1">
-              {supportedLocales.map((item) => (
-                <Link
-                  key={item.code}
-                  href={localePath(item.code)}
-                  className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase transition-all ${
-                    locale === item.code ? 'bg-gold text-dark-bg' : 'text-gray-400 hover:text-white'
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </div>
+            <LanguageSwitcher className="hidden sm:inline-flex" />
 
             {/* Theme Toggle */}
             <button 
@@ -262,20 +238,7 @@ function NavbarContent() {
                     </Link>
                   );
                 })}
-                <div className="flex items-center justify-center gap-2 rounded-full border border-white/10 bg-surface p-2">
-                  {supportedLocales.map((item) => (
-                    <Link
-                      key={item.code}
-                      href={localePath(item.code)}
-                      onClick={() => setIsOpen(false)}
-                      className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase transition-all ${
-                        locale === item.code ? 'bg-gold text-dark-bg' : 'text-gray-400 hover:text-white'
-                      }`}
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
+                <LanguageSwitcher onChange={() => setIsOpen(false)} className="flex justify-center p-2" />
                 <button
                   onClick={toggleTheme}
                   className="w-full flex items-center justify-center gap-3 py-3 rounded-3xl border border-white/10 bg-white/5 text-white hover:bg-white/10 transition-all"

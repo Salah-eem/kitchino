@@ -75,7 +75,7 @@ export default function CartPage() {
                     transition={{ delay: index * 0.05 }}
                     className="flex items-center gap-5 p-5 mb-4 bg-dark-card border border-dark-border rounded-2xl hover:border-gold/10 transition-all group"
                   >
-                    <Link href={`/${locale}/products/${item.product.id}`}>
+                    <Link href={`/${locale}/products/${item.product.slug}`}>
                       <div className="relative w-20 h-20 rounded-xl overflow-hidden bg-dark-surface flex-shrink-0">
                         <Image 
                           src={item.product.images.length > 0 ? item.product.images[0] : '/images/no-image.jpg'} 
@@ -87,7 +87,7 @@ export default function CartPage() {
                       </div>
                     </Link>
                     <div className="flex-1 min-w-0">
-                      <Link href={`/${locale}/products/${item.product.id}`}>
+                      <Link href={`/${locale}/products/${item.product.slug}`}>
                         <h3 className="font-semibold text-gray-200 hover:text-gold transition-colors truncate">{item.product.name}</h3>
                       </Link>
                       <p className="text-gray-500 text-sm mt-1">${(item.product?.price || 0).toFixed(2)} each</p>

@@ -5,6 +5,7 @@ import { useLocale } from 'next-intl';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, ChefHat } from 'lucide-react';
 import { GradientText } from './ui/gradient-text';
+import { LanguageSwitcher } from './LanguageSwitcher';
 
 export function Footer() {
   const locale = useLocale();
@@ -132,6 +133,7 @@ export function Footer() {
             &copy; 2026 Kitchino. All rights reserved. Crafted with passion.
           </p>
           <div className="flex items-center gap-6 text-xs text-muted">
+            <LanguageSwitcher />
             <Link href="#" className="hover:text-gold transition-colors">Privacy</Link>
             <Link href="#" className="hover:text-gold transition-colors">Terms</Link>
             <Link href="#" className="hover:text-gold transition-colors">Cookies</Link>

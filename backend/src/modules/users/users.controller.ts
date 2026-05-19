@@ -25,6 +25,11 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
+  @Get('profile')
+  getProfile(@CurrentUser() currentUser: any) {
+    return this.usersService.findOne(currentUser.id);
+  }
+
   @Get(':id')
   @Roles(Role.ADMIN)
   findOne(@Param('id') id: string) {
@@ -39,7 +44,7 @@ export class UsersController {
 
   @Put('profile')
   updateProfile(@CurrentUser() currentUser: any, @Body() data: UpdateUserDto) {
-    return this.usersService.update(currentUser.id, data);
+    return this.usersService.updateProfile(currentUser.id, data);
   }
 
   @Delete(':id')

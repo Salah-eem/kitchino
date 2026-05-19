@@ -76,6 +76,11 @@ export class UsersService {
     return this.prisma.user.update({ where: { id }, data });
   }
 
+  async updateProfile(id: string, data: any) {
+    const { role, isActive, ...profileData } = data;
+    return this.update(id, profileData);
+  }
+
   async delete(id: string) {
     return this.prisma.user.delete({ where: { id } });
   }

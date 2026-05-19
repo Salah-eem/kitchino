@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { apiClient } from '@/lib/api';
 import { Product } from '@/types';
 import { ReviewForm } from '@/components/ReviewForm';
@@ -18,6 +18,7 @@ import { toast } from 'sonner';
 export default function ProductDetailPage() {
   const params = useParams();
   const locale = useLocale();
+  const router = useRouter();
   const slug = params.slug as string;
   const [product, setProduct] = useState<Product | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -81,7 +82,7 @@ export default function ProductDetailPage() {
       toast.success(`${product.name} ajouté au panier`, {
         action: {
           label: 'Voir le panier',
-          onClick: () => window.location.href = `/${locale}/cart`,
+          onClick: () => router.push(`/${locale}/cart`),
         }
       });
     } catch (error) {

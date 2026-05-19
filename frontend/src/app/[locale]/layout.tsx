@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import { LayoutContent } from "@/components/LayoutContent";
 import { NextIntlClientProvider, useMessages } from 'next-intl';
 import { Toaster } from 'sonner';
 import { ConfirmProvider } from '@/hooks/use-confirm';
 import { ThemeProvider } from '@/context/ThemeContext';
 import "@/app/globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Kitchino - Premium Kitchen Equipment",
@@ -38,7 +35,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={inter.className}>
+      <body>
         <ThemeProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <ConfirmProvider>

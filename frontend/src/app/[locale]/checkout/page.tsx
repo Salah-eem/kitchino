@@ -34,7 +34,7 @@ export default function CheckoutPage() {
   useEffect(() => {
     if (!user) {
       toast.error('Please login to checkout');
-      router.push(`/${locale}/login?redirect=checkout`);
+      router.push(`/${locale}/auth/login?redirect=checkout`);
     }
   }, [user, router, locale]);
 

@@ -1,8 +1,14 @@
-import { Controller, Post, UseInterceptors, UploadedFile, UploadedFiles, BadRequestException } from '@nestjs/common';
+import { Controller, Post, UseGuards, UseInterceptors, UploadedFile, UploadedFiles, BadRequestException } from '@nestjs/common';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { UploadService } from './upload.service';
+import { Role } from '@prisma/client';
+import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../../common/guards/roles.guard';
+import { Roles } from '../../common/decorators/roles.decorator';
 
 @Controller('upload')
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles(Role.ADMIN)
 export class UploadController {
   constructor(private uploadService: UploadService) {}
 

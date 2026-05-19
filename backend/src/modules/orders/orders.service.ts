@@ -1,8 +1,9 @@
-import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
+import { Injectable, BadRequestException, ForbiddenException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { PromotionsService } from '../promotions/promotions.service';
 import { PaymentsService } from '../payments/payments.service';
 import Stripe from 'stripe';
+import { Role, User } from '@prisma/client';
 
 @Injectable()
 export class OrdersService {
@@ -78,23 +79,14 @@ export class OrdersService {
       },
     });
 
-    if (discountCodeId) {
-      await this.prisma.discountCode.update({
-        where: { id: discountCodeId },
-        data: { usedCount: { increment: 1 } },
-      });
-    }
-
     const session = await this.stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: lineItems,
       mode: 'payment',
       success_url: `${process.env.FRONTEND_URL}/checkout/success?orderId=${order.id}`,
       cancel_url: `${process.env.FRONTEND_URL}/cart`,
-      metadata: { orderId: order.id },
+      metadata: { orderId: order.id, userId },
     });
-    // Clear cart after order creation
-    await this.prisma.cartItem.deleteMany({ where: { userId } });
     return { url: session.url, orderId: order.id };
   }
 
@@ -111,6 +103,7 @@ export class OrdersService {
         subtotal += product.price * item.quantity;
         orderItems.push({
           productId: product.id,
+          name: product.name,
           quantity: item.quantity,
           price: product.price,
         });
@@ -143,26 +136,17 @@ export class OrdersService {
           shippingAddress: shippingAddress || {},
           paymentMethod: paymentMethod as any,
           items: {
-            create: orderItems,
+            create: orderItems.map(({ name, ...item }) => item),
           },
         },
       });
 
-      // 5. Update discount usage
-      // 5. Update discount usage (only for COD, CARD handled by webhook)
-      if (discountCodeId && paymentMethod === 'COD') {
-        await this.prisma.discountCode.update({
-          where: { id: discountCodeId },
-          data: { usedCount: { increment: 1 } },
-        });
-      }
-
       // 6. Handle Payment Flow
       if (paymentMethod === 'CARD') {
-        const lineItems = items.map((item: any) => ({
+        const lineItems = orderItems.map((item: any) => ({
           price_data: {
             currency: 'usd',
-            product_data: { name: `Order Item` }, // simplified for brevity
+            product_data: { name: item.name },
             unit_amount: Math.round(item.price * 100),
           },
           quantity: item.quantity,
@@ -234,6 +218,15 @@ export class OrdersService {
         discountCode: true
       },
     });
+  }
+
+  async findByIdForUser(orderId: string, user: User) {
+    const order = await this.findById(orderId);
+    if (!order) throw new NotFoundException('Order not found');
+    if (user.role !== Role.ADMIN && order.userId !== user.id) {
+      throw new ForbiddenException('You cannot access this order');
+    }
+    return order;
   }
 
   async updateStatus(orderId: string, status: string, tracking?: { number?: string; url?: string }) {

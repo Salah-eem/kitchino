@@ -2,6 +2,7 @@ import { Controller, Get, Post, Put, Delete, Body, Param, Query, UseGuards } fro
 import { ReviewsService } from './reviews.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../../common/guards/roles.guard';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { Role, User } from '@prisma/client';
 import { Roles } from '@app/common/decorators/roles.decorator';
@@ -17,7 +18,7 @@ export class ReviewsController {
   }
 
   @Get()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
   findAll(@Query('page') page = 1, @Query('limit') limit = 10) {
     return this.reviewsService.findAll(page, limit);
@@ -46,7 +47,7 @@ export class ReviewsController {
   }
 
   @Delete('admin/:id')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
   deleteAdmin(@Param('id') id: string) {
     return this.reviewsService.deleteAdmin(id);

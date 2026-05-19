@@ -72,7 +72,7 @@ class ApiClient {
   }
 
   getProductBySlug(slug: string) {
-    return this.instance.get(`/products/${slug}`);
+    return this.instance.get(`/products/slug/${slug}`);
   }
 
   getProductById(id: string) {

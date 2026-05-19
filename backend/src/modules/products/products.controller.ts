@@ -6,7 +6,6 @@ import { Roles } from '../../common/decorators/roles.decorator';
 import { Role } from '@prisma/client';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { CurrentUser } from '@app/common/decorators/current-user.decorator';
 
 @Controller('products')
 export class ProductsController {
@@ -22,21 +21,20 @@ export class ProductsController {
     return this.productsService.getFeatured();
   }
 
+  @Get('slug/:slug')
+  findBySlug(@Param('slug') slug: string) {
+    return this.productsService.findBySlug(slug);
+  }
+
   @Get(':id')
   findById(@Param('id') id: string) {
     return this.productsService.findById(id);
   }
 
-  @Get(':slug')
-  findBySlug(@Param('slug') slug: string) {
-    return this.productsService.findBySlug(slug);
-  }
-
   @Post()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
-  create(@Body() dto: CreateProductDto, @CurrentUser() user: any) {
-    console.log(user);
+  create(@Body() dto: CreateProductDto) {
     return this.productsService.create(dto);
   }
 

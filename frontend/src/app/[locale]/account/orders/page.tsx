@@ -20,7 +20,7 @@ export default function OrdersPage() {
 
   useEffect(() => {
     if (!user) {
-      router.push(`/${locale}/login?redirect=account/orders`);
+      router.push(`/${locale}/auth/login?redirect=account/orders`);
       return;
     }
 

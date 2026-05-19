@@ -30,6 +30,7 @@ export function ReviewForm({ productId, onSubmit }: ReviewFormProps) {
       setRating(5);
       setTimeout(() => setSubmitted(false), 4000);
     } catch (err) {
+      console.error('Error submitting review:', JSON.stringify(err));
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
       setIsSubmitting(false);

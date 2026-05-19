@@ -16,6 +16,7 @@ import { useConfirm } from '@/hooks/use-confirm';
 import { AdminPageHeader } from '@/components/admin/AdminPageHeader';
 import { AdminSearchBar } from '@/components/admin/AdminSearchBar';
 import { AdminGridCard } from '@/components/admin/AdminGridCard';
+import { useLocale } from 'next-intl';
 
 interface Review {
   id: string;
@@ -35,6 +36,7 @@ interface Review {
 }
 
 export default function AdminReviewsPage() {
+  const locale = useLocale();
   const [reviews, setReviews] = useState<Review[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -112,7 +114,7 @@ export default function AdminReviewsPage() {
                   {review.user.firstName} {review.user.lastName}
                 </h3>
                 <Link 
-                  href={`/products/${review.product.slug}`} 
+                  href={`/${locale}/products/${review.product.slug}`} 
                   target="_blank"
                   className="text-xs text-gold hover:underline flex items-center gap-1 mt-1"
                 >
